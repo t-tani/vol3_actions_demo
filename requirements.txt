@@ -1,0 +1,7 @@
+distorm3
+pycrypto
+yara-python >= 3.8.0
+pefile >= 2017.8.1
+pbkdf2
+capstone >= 3.0.0
+tqdm
