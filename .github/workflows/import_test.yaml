@@ -32,7 +32,7 @@ jobs:
 
     - name: modify PATHONPATH
       run: |
-        python -c 'import os;import sys;path=[path for path in sys.path if "site-packages" in path][0];vollib=[path for path in os.listdir(path) if "volatility" in path][0];sys.path.append(path+"/"+vollib);cmd="::set-env name=PYTHONPATH::"+":".join(sys.path);print(cmd)'
+        python -c 'import os;import sys;path=[path for path in sys.path if "site-packages" in path][0];vollib=[path for path in os.listdir(path) if "volatility" in path][0];sys.path.append(path+"/"+vollib);cmd="::set-env name=PYTHONPATH:"+":".join(sys.path);print(cmd)'
 
     - name: Check python path
       run: |
@@ -51,4 +51,5 @@ jobs:
 
     - name: try to import Volatility3 modules
       run: |
+        python test.py
         python test.py
