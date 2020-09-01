@@ -1,0 +1,56 @@
+name: malconfscan_test
+
+on:
+  push:
+    branches:
+      - master
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: 
+        python-version: [3.6, 3.7, 3.8]
+    
+    steps:
+    - name: Checkout  repository
+      uses: actions/checkout@v2
+      with:
+        ref: master
+
+    - name: Checkout Volatility3 repository
+      uses: actions/checkout@v2
+      with:
+        repository: volatilityfoundation/volatility3
+        path: vol3
+
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+        architecture: x64
+
+    - name: Display Python version
+      run: python -c "import sys; print(sys.version)"
+
+    - name: Install Volatility3
+      run: |
+        python vol3/setup.py install
+
+    - name: Set PYTHONPATH
+      run: |
+        echo "::set-env name=PYTHONPATH::home/runner/vol3_actions_demo/vol3/volatility"
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pytest pytest-cov flake8
+        pip install -r requirements.txt
+
+    - name: Lint with flake8
+      run: |
+        flake8 . --exclude vol3 --count --select=E9,F63,F7,F82 --show-source --statistics
+        flake8 . --exclude vol3 --count --exit-zero --max-complexity=20 --max-line-length=127 --statistics
+
+    - name: try to import Volatility3 modules
+      run: |
+        python test.py
