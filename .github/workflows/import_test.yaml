@@ -38,7 +38,8 @@ jobs:
 
     - name: Set PYTHONPATH
       run: |
-        echo "::set-env name=PYTHONPATH::home/runner/vol3_actions_demo/vol3/volatility"
+        echo "::set-env name=PYTHONPATH::/home/runner/work/vol3_actions_demo/vol3_actions_demo/vol3/volatility"
+        echo $PYTHONPATH
 
     - name: Install dependencies
       run: |
