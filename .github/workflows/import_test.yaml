@@ -17,12 +17,6 @@ jobs:
       with:
         ref: master
 
-    - name: Checkout Volatility3 repository
-      uses: actions/checkout@v2
-      with:
-        repository: volatilityfoundation/volatility3
-        path: vol3
-
     - name: Setup Python
       uses: actions/setup-python@v2
       with:
@@ -32,14 +26,9 @@ jobs:
     - name: Display Python version
       run: python -c "import sys; print(sys.version)"
 
-    - name: Install Volatility3
+    - name: Install latest Volatility3
       run: |
-        python vol3/setup.py install
-
-    - name: Set PYTHONPATH
-      run: |
-        echo "::set-env name=PYTHONPATH::/home/runner/work/vol3_actions_demo/vol3_actions_demo/vol3/volatility"
-        echo $PYTHONPATH
+        pip install git+https://github.com/volatilityfoundation/volatility3.git@master
 
     - name: Install dependencies
       run: |
