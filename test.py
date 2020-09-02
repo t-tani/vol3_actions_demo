@@ -9,7 +9,7 @@ try:
 except ImportError:
     print("Failed 0x01")
 try:
-    from volatility.plugins.windows import vaddump
+    from volatility.plugins.windows import vadinfo
     print("Success to import volatility modules")
 except ImportError:
     print("Failed 0x02")
